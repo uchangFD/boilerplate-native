@@ -9,7 +9,6 @@ import eventStream from 'event-stream';
 export default {
   gulp,
   source,
-  buffer,
   babel,
   browserify,
   sass,
