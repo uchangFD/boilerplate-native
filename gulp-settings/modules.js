@@ -5,11 +5,15 @@ import babel from 'babelify';
 import browserify from 'browserify';
 import sass from 'gulp-sass';
 import rename from 'gulp-rename';
+import eventStream from 'event-stream';
 
-export default gulp;
-export default source;
-export default buffer;
-export default babel;
-export default browserify;
-export default sass;
-export default rename;
+export default {
+  gulp,
+  source,
+  buffer,
+  babel,
+  browserify,
+  sass,
+  rename,
+  eventStream
+};

@@ -1,19 +1,12 @@
-import { gulp, babel, browserify } from './modules'; 
-import settings from './settings';
+import modules from './modules'; 
 
 const gulp = modules.gulp;
 const browserify = modules.browserify;
+const rename = modules.rename;
 const babel = modules.babel;
-
-
-/**
- * build js
- */ 
-
-const public = settings.public;
-const custom = settings.custom;
-
-const srcPaths = custom.length === 0 ? [public.src] : custom.map(pathInfo => pathInfo.src);
+const source = modules.source;
+const buffer = modules.buffer;
+const eventStream = modules.eventStream;
 
 // custom일 때는 여러개의 path 정보가 있을 텐데 browserify는 어떻게 처리함?
 // entries가 있음.
@@ -33,16 +26,37 @@ const srcPaths = custom.length === 0 ? [public.src] : custom.map(pathInfo => pat
  * 2. sass bundling ..
  */
 
-const bundler = browserify({
-  entries: srcPaths,
-  debug: true
-}).transform(babel, { presets: ['es2015'] });
+/**
+ *  
+ *  compileJs 
+ *  1. settings에서 public or custom jsInfo를 받음.
+ *  2. 받은 jsInfo를 배열의 map함수를 통해서 필요한 파일로 변환 후 반환한다.
+ *    - browserify
+ *    - rename
+ *      - 기존 파일의 이름뒤에 덧붙일 이름 추가.
+ *  3. 받은 node stream들을 머지시켜 주기 위해 eventStream함수를 사용.
+ *  
+ */
+export const compileJs = (paths) => {
 
-export const compileJs = () => {
-  return bundler.bundle()
-                
-}
+  var tasks = paths.map(path => {
 
+    var srcPath = path.src;
+    var distPath = path.dist;
+    var filename = path.filename;
+    var extname = path.extname;
+
+    return browserify({ entries: [srcPath], debug: true })
+           .transform(babel, { presets: ['es2015'] })
+           .bundle()
+           .pipe(source(filename))
+           .pipe(buffer())
+           .pipe(rename({ extname }))
+           .pipe(gulp.dest(distPath));
+  });
+  
+  return eventStream.merge.apply(null, tasks);
+};
  /**
  * build scss
  */ 
