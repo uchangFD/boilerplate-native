@@ -50,7 +50,6 @@ export const compileJs = (paths) => {
            .transform(babel, { presets: ['es2015'] })
            .bundle()
            .pipe(source(filename))
-           .pipe(buffer())
            .pipe(rename({ extname }))
            .pipe(gulp.dest(distPath));
   });
