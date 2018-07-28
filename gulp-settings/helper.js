@@ -5,7 +5,6 @@ const browserify = modules.browserify;
 const rename = modules.rename;
 const babel = modules.babel;
 const source = modules.source;
-const buffer = modules.buffer;
 const eventStream = modules.eventStream;
 
 // custom일 때는 여러개의 path 정보가 있을 텐데 browserify는 어떻게 처리함?
@@ -58,5 +57,10 @@ export const compileJs = (paths) => {
 };
  /**
  * build scss
+ * 
+ * 1. 설치 
+ *  - node-sass 필요
+ *  - gulp-sass
+ *  - 
  */ 
  
