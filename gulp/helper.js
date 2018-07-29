@@ -27,14 +27,6 @@ export const compileJs = (paths, publicOpts) => {
   
   return eventStream.merge.apply(null, tasks);
 };
- /**
- * build scss
- * 
- * 1. 설치 
- *  - node-sass 필요
- *  - gulp-sass
- *  - 
- */ 
  
 export const compileScss = (paths, publicOpts) => {
 
@@ -43,9 +35,12 @@ export const compileScss = (paths, publicOpts) => {
     const src = path.src || publicOpts.src;
     const dist = path.dist || publicOpts.dist;
     const opts = path.options && JSON.stringify(path.options) !== '{}' ? path.options : publicOpts.options
+    const filename = path.filename || publicOpts.filename;
+    const extname = path.extname || publicOpts.extname;
 
     return gulp.src(src)
                .pipe(sass(opts).on('error', sass.logError))
+               .pipe(rename({ extname }))
                .pipe(gulp.dest(dist));
   });
 

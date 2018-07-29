@@ -34,6 +34,8 @@ export default {
     public: {
       src: './src/scss/stylesheets.scss',
       dist: './dist/css/',
+      filename: 'stylesheets.css',
+      extname: '.min.css',
       options: {
         sourcemap: true,
         outputStyle: 'compressed'
@@ -43,11 +45,13 @@ export default {
       {
         src: './src/scss/stylesheets.scss',
         dist: './dist/css/',
+        filename: 'stylesheets.scss',
         options: {}
       },
       {
         src: './src/scss/components/index.scss',
         dist: './dist/css/components/',
+        filename: '.components.css',
         options: {}
       }
     ],

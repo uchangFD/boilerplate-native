@@ -1,5 +1,5 @@
-import modules from './gulp-settings/modules';
-import { compileJs, compileScss } from './gulp-settings/helper';
+import modules from './gulp/modules';
+import { compileJs, compileScss } from './gulp/helper';
 import settings from './gulp.settings';
 
 const gulp = modules.gulp;
